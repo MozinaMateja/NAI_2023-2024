@@ -1,21 +1,18 @@
 format long
 funkcija = @(x)abs(x).*sin(2*exp(1.5*x)-1);
-%a = -1;
-%b = 1;
-%n = 2;  %stopnja polinoma
-%E = linspace(-1,1,n + 2); %seznam točk
 
-%-----------------------------
-%[g,m] = najdipolinom(funkcija, E, n);
+%    NE DELA ZA VELIKE N !
 
-%-----------------------------
-%[mm, xx] = najvecjix(1000,a,b,funkcija,g);
-%razlika = abs(m-mm);
-%-----------------------------
+re = Remesov_postopek(funkcija,-1,1, 4, 10)';
 
-%pomozna(funkcija,g, E,xx);
+% NAPAKA
+ui = linspace(-1,1,1001);
+residual = @(x) (funkcija(x) - polyval(re,x));
+norm(residual(ui), 'inf');
 
-Remesov_postopek(funkcija,-1,1, 6, 13)
+
+
+Remesov_postopek(funkcija,-1,1, 4, 10)
 %--------------------------------------------------------
 function seznam_koeficientov_polinoma = Remesov_postopek(funkcija,a,b, stopnja_polinoma, koraki)
     E = linspace(a,b,stopnja_polinoma + 2);
